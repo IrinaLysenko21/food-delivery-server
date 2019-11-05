@@ -24,19 +24,7 @@ const signUpRoute = async (request, response) => {
 
     const user = JSON.parse(body);
 
-    if (
-      user.constructor === ({}).constructor &&
-
-      user.hasOwnProperty("username") &&
-      user.hasOwnProperty("telephone") &&
-      user.hasOwnProperty("password") &&
-      user.hasOwnProperty("email") &&
-
-      user.username !== '' &&
-      user.telephone !== '' &&
-      user.password !== '' &&
-      user.email !== ''
-    ) {
+    if (user && user.username && user.password && user.telephone && user.email) {
       saveUser(body);
 
       const res = {
