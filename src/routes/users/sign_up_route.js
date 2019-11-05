@@ -6,37 +6,52 @@ const saveUser = userString => {
 
   const pathToUser = path.join(__dirname, '../../', 'db/', 'users/', `${user.username}.json`);
 
-  console.log(fs.writeFile(pathToUser, userString, function (err) {
+  fs.writeFile(pathToUser, userString, function (err) {
     if (err) throw err;
-  }));
+  });
 
   return user;
 };
 
-const sendResponse = (response, user) => {
-  const res = {
-    "status": "success",
-    "user": user
-  };
-
-  response.writeHead(200, {"Content-Type": "application/json"});
-  response.write(JSON.stringify(res));
-  response.end();
-};
-
-const signUpRoute = (request, response) => {
+const signUpRoute = async (request, response) => {
   let body = '';
 
   if (request.method === 'POST') {
-
-    request
+    await request
     .on('data', function (data) {
       body = body + data;
-    })
-    .on('end', function () {
-      const user = saveUser(body);
-      sendResponse(response, user);
     });
+
+    const user = JSON.parse(body);
+
+    if (
+      user.constructor === ({}).constructor &&
+
+      user.hasOwnProperty("username") &&
+      user.hasOwnProperty("telephone") &&
+      user.hasOwnProperty("password") &&
+      user.hasOwnProperty("email") &&
+
+      user.username !== '' &&
+      user.telephone !== '' &&
+      user.password !== '' &&
+      user.email !== ''
+    ) {
+      saveUser(body);
+
+      const res = {
+        "status": "success",
+        "user": user
+      };
+
+      response.writeHead(201, {"Content-Type": "application/json"});
+      response.write(JSON.stringify(res));
+      response.end();
+    } else {
+      response.writeHead(400, {"Content-Type": "text/plain"});
+      response.write("Bad Request");
+      response.end();
+    }
   }
 };
 
