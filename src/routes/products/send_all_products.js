@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const productsRoute = (request, response) => {
+const sendAllProducts = (request, response) => {
   const filePath = path.join(__dirname, '../../', 'db/', 'products', 'all-products.json');
 
   response.writeHead(200, {
@@ -13,4 +13,4 @@ const productsRoute = (request, response) => {
   readStream.pipe(response);
 };
 
-module.exports = productsRoute;
+module.exports = sendAllProducts;
