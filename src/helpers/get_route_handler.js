@@ -1,6 +1,7 @@
 const hasNumber = myString => /\d/.test(myString);
 
 const getIdFreeUrl = url => {
+
   const lastIndex = url.lastIndexOf('/');
   const idString = url.slice(lastIndex +1).trim();
 
