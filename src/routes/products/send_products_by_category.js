@@ -1,10 +1,14 @@
 const url = require('url');
 const fs = require("fs");
 const path = require('path');
+const querystring = require('querystring');
 
 const getProducts = (request, response) => {
   const parsedUrl = url.parse(request.url);
   const pathWithCategory = parsedUrl.path;
+  const categoryQuery = querystring.parse(pathWithCategory);
+  const categoryStr = Object.values(categoryQuery)[0];
+  const category = categoryStr.slice(1, categoryStr.length - 1);
 
   const filePath = path.join(__dirname, '../../', 'db/', 'products', 'all_products.json');
 
@@ -14,15 +18,9 @@ const getProducts = (request, response) => {
     }
 
     const allProducts = JSON.parse(data);
-    const reg = /%27[\D]*%27/;
-    const reg_2 = /%27/g;
-    const match = pathWithCategory.match(reg);
-    const category = match[0].replace(reg_2, '');
 
-    const products = [];
-
-    allProducts.filter(el => {
-      el.categories.map(elem => elem === category ? products.push(el) : null);
+    const products = allProducts.filter(el => {
+      return el.categories.find(elem => elem === category);
     });
 
     if (products.length === 0) {
