@@ -2,6 +2,7 @@ const url = require('url');
 const fs = require("fs");
 const path = require('path');
 const querystring = require('querystring');
+const dataParser = require('../../helpers/dataParser');
 
 const getProducts = (request, response) => {
   const parsedUrl = url.parse(request.url);
@@ -17,13 +18,13 @@ const getProducts = (request, response) => {
         return console.error(err);
     }
 
-    const allProducts = JSON.parse(data);
+    const allProducts = dataParser(data);
 
     const products = allProducts.filter(el => {
       return ids.find(elem => el.id === Number(elem));
     });
 
-    res = {
+    const res = {
       "status": "success",
       "products": products
     };

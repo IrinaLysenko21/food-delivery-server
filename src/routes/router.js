@@ -4,7 +4,6 @@ const mainRoute = require('./main/main_route');
 
 const router = {
   '/products': productsRoute,
-  '/products/': productsRoute,
   '/signup': signUpRoute,
   default: mainRoute
 };

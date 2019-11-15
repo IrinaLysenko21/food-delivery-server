@@ -10,14 +10,14 @@ const handleProductsRoute = (request, response) => {
     const parsedUrl = url.parse(request.url);
     const path = parsedUrl.path;
 
-    const regExp_1 = /products\/\d/;
-    const regExp_2 = /products\/\?ids=[\d\D]/;
-    const regExp_3 = /products\/\?category=[\d\D]/;
+    const regExpId = /products\/\d/;
+    const regExpIds = /products\/\?ids=[\d\D]/;
+    const regExpCategory = /products\/\?category=[\d\D]/;
 
-    path === '/products' ? sendAllProducts(request, response) : null;
-    path.match(regExp_1) ? sendProduct(request, response) : null;
-    path.match(regExp_2) ? sendProducts(request, response) : null;
-    path.match(regExp_3) ? sendProductsByCategory(request, response) : null;
+    path === '/products' && sendAllProducts(request, response);
+    path.match(regExpId) && sendProduct(request, response);
+    path.match(regExpIds) && sendProducts(request, response);
+    path.match(regExpCategory) && sendProductsByCategory(request, response);
 
     return;
   }
