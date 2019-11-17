@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const productsRouter = require('./products/products_routes');
 const usersRouter = require('./users/users_routes');
+const ordersRouter = require('./orders/orders_routes')
 
 const app = express();
 
@@ -22,6 +23,7 @@ const startServer = port => {
     .use(morgan('dev'))
     .use('/products', productsRouter)
     .use('/users', usersRouter)
+    .use('/orders', ordersRouter)
     .use(errorHandler);
 
   app.listen(port);

@@ -5,7 +5,7 @@ const dataParser = require('../../helpers/dataParser');
 const saveUser = userString => {
   const user = dataParser(userString);
 
-  const pathToUserFolder = path.join(__dirname, '../../', 'db/', 'users/', `${user.username}`);
+  const pathToUserFolder = path.join(__dirname, '../../', 'db/', 'users/', `${user.id}`);
   const pathToUserFile = path.join(pathToUserFolder, `${user.username}.json`);
 
   fs.mkdir(pathToUserFolder, { recursive: true }, (err) => {
