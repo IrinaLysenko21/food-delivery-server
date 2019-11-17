@@ -26,14 +26,20 @@ const getProduct = (request, response) => {
 
     const product = allProducts.find((el) => el.id === Number(id));
 
-    const res = {
-      "status": "success",
-      "products": [product]
-    };
+    let res = {};
+    if (!product) {
+      res = {
+        status: 'no products',
+        products: []
+      };
+    } else {
+      res = {
+        status: 'success',
+        products: [product]
+      };
+    }
 
-    response.writeHead(200, {"Content-Type": "application/json"});
-    response.write(JSON.stringify(res));
-    response.end();
+    response.status(200).json(res);
   });
 };
 

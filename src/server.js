@@ -1,24 +1,32 @@
-const http = require('http');
-const url = require('url');
-const getRouteHandler = require('./helpers/get_route_handler');
-
+const express = require('express');
+const corsMiddleware = require('cors');
 const morgan = require('morgan');
-const router = require('./routes/router');
+const bodyParser = require('body-parser');
+const productsRouter = require('./products/products_routes');
+const usersRouter = require('./users/users_routes');
 
-const logger = morgan('combined');
+const app = express();
+
+const errorHandler = (err, req, res, next)  => {
+  res
+    .status(500)
+    .send('Error found: ' + err.stack);
+};
 
 const startServer = port => {
+  app
+    .use(bodyParser.urlencoded({ extended: false }))
+    .use(bodyParser.json())
+    .use(express.json())
+    .use(corsMiddleware())
+    .use(morgan('dev'))
+    .use('/products', productsRouter)
+    .use('/users', usersRouter)
+    .use(errorHandler);
 
-  const server = http.createServer((request, response) => {
+  app.listen(port);
 
-    const parsedUrl = url.parse(request.url);
-
-    const func = getRouteHandler(router, parsedUrl.pathname) || router.default;
-
-    logger(request, response, () => func(request, response));
-  });
-
-  server.listen(port);
+  console.log('Server was started at http://localhost:' + port);
 };
 
 module.exports = startServer;
