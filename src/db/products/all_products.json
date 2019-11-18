@@ -81,4 +81,28 @@
 	"created": "21-08-2018",
 	"modified": "21-08-2018",
 	"categories": ["pizza"]
+},
+{
+	"id": 19112838,
+	"sku": 1120008,
+	"name": "Coca Cola",
+	"description": "Традиционный освежающий напиток.",
+	"price": "25",
+	"currency": "UAN",
+	"creatorId": 2,
+	"created": "21-08-2018",
+	"modified": "21-08-2018",
+	"categories": ["drinks"]
+},
+{
+	"id": 19112839,
+	"sku": 1120009,
+	"name": "Цитрусовый джус",
+	"description": "Напиток из свежевыжатого сока апельсина, лимона и грейпфрута.",
+	"price": "50",
+	"currency": "UAN",
+	"creatorId": 2,
+	"created": "21-08-2018",
+	"modified": "21-08-2018",
+	"categories": ["drinks"]
 }]
