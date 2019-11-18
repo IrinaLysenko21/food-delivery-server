@@ -1,14 +1,9 @@
-const url = require('url');
 const fs = require("fs");
 const path = require('path');
-const querystring = require('querystring');
 const dataParser = require('../../helpers/dataParser');
 
 const getProducts = (request, response) => {
-  const parsedUrl = url.parse(request.url);
-  const pathWithCategory = parsedUrl.path;
-  const categoryQuery = querystring.parse(pathWithCategory);
-  const categoryStr = Object.values(categoryQuery)[0];
+  const categoryStr = Object.values(request.query)[0];
   const category = categoryStr.slice(1, categoryStr.length - 1);
 
   const filePath = path.join(__dirname, '../../', 'db/', 'products', 'all_products.json');
@@ -30,14 +25,16 @@ const getProducts = (request, response) => {
         status: 'no products',
         products: []
       };
+
+      response.status(404).json(res);
     } else {
       res = {
         status: 'success',
         products: products
       };
-    }
 
-    response.status(200).json(res);
+      response.status(200).json(res);
+    }
   });
 };
 

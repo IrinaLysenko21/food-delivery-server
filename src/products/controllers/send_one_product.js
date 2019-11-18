@@ -1,19 +1,9 @@
-const url = require('url');
 const fs = require("fs");
 const path = require('path');
 const dataParser = require('../../helpers/dataParser');
 
-const getId = url => {
-  const lastIndex = url.lastIndexOf('/');
-
-  if (lastIndex !== -1) {
-    return url.slice(lastIndex + 1);
-  }
-};
-
 const getProduct = (request, response) => {
-  const parsedUrl = url.parse(request.url);
-  const id = getId(parsedUrl.path);
+  const id = request.params.id;
 
   const filePath = path.join(__dirname, '../../', 'db/', 'products', 'all_products.json');
 
@@ -32,14 +22,16 @@ const getProduct = (request, response) => {
         status: 'no products',
         products: []
       };
+
+      response.status(404).json(res);
     } else {
       res = {
         status: 'success',
         products: [product]
       };
-    }
 
-    response.status(200).json(res);
+      response.status(200).json(res);
+    }
   });
 };
 

@@ -3,13 +3,12 @@ const { sendAllProducts, sendOneProduct, sendSeveralProducts, sendProductsByCate
 
 const router = Router();
 
-const regExpIds = /\/\?ids=[\d\D]*/;
-const regExpCategory = /\/\?category=[\d\D]*/;
-
 router.get('/', (request, response) => {
+  const requestQuery = Object.keys(request.query)[0];
+
   request.url === '/' && sendAllProducts(request, response);
-  request.url.match(regExpIds) && sendSeveralProducts(request, response);
-  request.url.match(regExpCategory) && sendProductsByCategory(request, response);
+  requestQuery === 'ids' && sendSeveralProducts(request, response);
+  requestQuery === 'category' && sendProductsByCategory(request, response);
 });
 
 router.get('/:id', sendOneProduct);

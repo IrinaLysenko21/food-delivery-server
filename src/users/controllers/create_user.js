@@ -20,42 +20,42 @@ const saveUser = userString => {
 };
 
 const signUpRoute = (request, response) => {
-  if (request.method === 'POST') {
-    const user = request.body;
+  if (request.method !== 'POST') return;
 
-    if (user && user.username && user.password && user.telephone && user.email) {
+  const user = request.body;
 
-      const userWithId = {
-        ...user,
-        id: Date.now()
-      };
+  if (user && user.username && user.password && user.telephone && user.email) {
 
-      const filePath = path.join(__dirname, '../../', 'db/', 'users', 'all_users.json');
+    const userWithId = {
+      ...user,
+      id: Date.now()
+    };
 
-      fs.readFile(filePath, function (err, data) {
-        if (err) {
-            return console.error(err);
-        }
+    const filePath = path.join(__dirname, '../../', 'db/', 'users', 'all_users.json');
 
-        const allUsers = dataParser(data);
-        allUsers.push(userWithId);
+    fs.readFile(filePath, function (err, data) {
+      if (err) {
+          return console.error(err);
+      }
 
-        fs.writeFile(filePath, JSON.stringify(allUsers), function (err) {
-          if (err) throw err;
-        });
+      const allUsers = dataParser(data);
+      allUsers.push(userWithId);
+
+      fs.writeFile(filePath, JSON.stringify(allUsers), function (err) {
+        if (err) throw err;
       });
+    });
 
-      saveUser(JSON.stringify(userWithId));
+    saveUser(JSON.stringify(userWithId));
 
-      const res = {
-        status: 'success',
-        user: userWithId
-      };
+    const res = {
+      status: 'success',
+      user: userWithId
+    };
 
-      response.status(201).json(res);
-    } else {
-      response.status(400).send('Bad Request');
-    }
+    response.status(201).json(res);
+  } else {
+    response.status(400).send('Bad Request');
   }
 };
 
