@@ -35,7 +35,7 @@ const getUser = (request, response) => {
     } else {
       res = {
         status: 'not found'
-      }
+      };
     }
 
     response.status(200).json(res);

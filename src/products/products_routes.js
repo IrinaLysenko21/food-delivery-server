@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { sendAllProducts, sendOneProduct, sendSeveralProducts, sendProductsByCategory } = require('./controllers')
+const { sendAllProducts, sendOneProduct, sendSeveralProducts, sendProductsByCategory } = require('./controllers');
 
 const router = Router();
 

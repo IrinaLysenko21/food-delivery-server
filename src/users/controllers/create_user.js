@@ -54,7 +54,7 @@ const signUpRoute = (request, response) => {
 
       response.status(201).json(res);
     } else {
-      res.status(400).send('Bad Request');
+      response.status(400).send('Bad Request');
     }
   }
 };

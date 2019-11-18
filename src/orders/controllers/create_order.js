@@ -72,7 +72,7 @@ const createOrderRoute = (request, response) => {
         }
       });
     } else {
-      res.status(400).send('Bad Request');
+      response.status(400).send('Bad Request');
     }
   };
 };

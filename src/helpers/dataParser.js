@@ -1,8 +1,8 @@
 const getData = data => {
   try {
-    const allProducts = JSON.parse(data);
+    const parsedData = JSON.parse(data);
 
-    return allProducts;
+    return parsedData;
   } catch (err) {
     console.error('Get state error: ', err);
   }
