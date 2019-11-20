@@ -8,15 +8,15 @@ const saveUser = userString => {
   const pathToUserFolder = path.join(__dirname, '../../', 'db/', 'users/', `${user.id}`);
   const pathToUserFile = path.join(pathToUserFolder, `${user.username}.json`);
 
-  fs.mkdir(pathToUserFolder, { recursive: true }, (err) => {
-    if (err) throw err;
+  return new Promise((resolve, reject) => {
+    fs.mkdir(pathToUserFolder, { recursive: true }, (err) => {
+      if (err) reject(err);
+      fs.writeFile(pathToUserFile, userString,  (err) => {
+         if (err) reject(err);
+         resolve(user);
+      });
+    });
   });
-
-  fs.writeFile(pathToUserFile, userString, function (err) {
-    if (err) throw err;
-  });
-
-  return user;
 };
 
 const signUpRoute = (request, response) => {
@@ -24,39 +24,39 @@ const signUpRoute = (request, response) => {
 
   const user = request.body;
 
-  if (user && user.username && user.password && user.telephone && user.email) {
+  if (!user && user.username && user.password && user.telephone && user.email) {
+    response.status(400).send('Bad Request');
+    return;
+  }
 
-    const userWithId = {
-      ...user,
-      id: Date.now()
-    };
+  const userWithId = {
+    ...user,
+    id: Date.now()
+  };
 
-    const filePath = path.join(__dirname, '../../', 'db/', 'users', 'all_users.json');
+  const filePath = path.join(__dirname, '../../', 'db/', 'users', 'all_users.json');
 
-    fs.readFile(filePath, function (err, data) {
-      if (err) {
-          return console.error(err);
-      }
+  fs.readFile(filePath, function (err, data) {
+    if (err) {
+        return console.error(err);
+    }
 
-      const allUsers = dataParser(data);
-      allUsers.push(userWithId);
+    const allUsers = dataParser(data);
+    allUsers.push(userWithId);
 
-      fs.writeFile(filePath, JSON.stringify(allUsers), function (err) {
-        if (err) throw err;
-      });
+    fs.writeFile(filePath, JSON.stringify(allUsers), function (err) {
+      if (err) throw err;
     });
+  });
 
-    saveUser(JSON.stringify(userWithId));
-
+  saveUser(JSON.stringify(userWithId)).then(user => {
     const res = {
       status: 'success',
-      user: userWithId
+      user
     };
 
     response.status(201).json(res);
-  } else {
-    response.status(400).send('Bad Request');
-  }
+  }).catch(err => response.status(400).json({error: err}));
 };
 
 module.exports = signUpRoute;
