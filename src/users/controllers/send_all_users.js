@@ -1,13 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+const User = require('../user_schema');
 
-const sendAllUsers = (request, response) => {
-  const filePath = path.join(__dirname, '../../', 'db/', 'users', 'all_users.json');
-  response.set('Content-Type', 'application/json');
-  response.status(200);
+const sendAllUsers = async (request, response) => {
+  try {
+    const users = await User.find();
 
-  const readStream = fs.createReadStream(filePath);
-  readStream.pipe(response);
+    response.status(200).json({status: "success", users});
+  } catch (err) {
+    response.status(400).json({status: "error", message: err.message});
+  }
 };
 
 module.exports = sendAllUsers;

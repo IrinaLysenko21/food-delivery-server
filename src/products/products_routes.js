@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { sendAllProducts, sendOneProduct, sendSeveralProducts, sendProductsByCategory } = require('./controllers');
+const { sendAllProducts, sendOneProduct, sendSeveralProducts, sendProductsByCategory, updateProduct } = require('./controllers');
 
 const router = Router();
 
@@ -12,5 +12,6 @@ router.get('/', (request, response) => {
 });
 
 router.get('/:id', sendOneProduct);
+router.put('/:id', updateProduct);
 
 module.exports = router;

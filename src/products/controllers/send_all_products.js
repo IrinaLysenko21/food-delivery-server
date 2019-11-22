@@ -1,13 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+const Product = require('../product_schema');
 
-const sendAllProducts = (request, response) => {
-  const filePath = path.join(__dirname, '../../', 'db/', 'products', 'all_products.json');
-  response.set('Content-Type', 'application/json');
-  response.status(200);
+const sendAllProducts = async (request, response) => {
+  try {
+    const products = await Product.find();
 
-  const readStream = fs.createReadStream(filePath);
-  readStream.pipe(response);
+    response.status(200).json({ status: "success", products });
+  } catch (err) {
+    response.status(404).json({ status: "error", message: err.message });
+  }
 };
 
 module.exports = sendAllProducts;

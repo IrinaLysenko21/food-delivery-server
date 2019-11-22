@@ -1,62 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const dataParser = require('../../helpers/dataParser');
+const User = require('../user_schema');
 
-const saveUser = userString => {
-  const user = dataParser(userString);
+const createUser = async (request, response) => {
+  try {
+    const newUser = new User(request.body);
+    const user = await newUser.save();
 
-  const pathToUserFolder = path.join(__dirname, '../../', 'db/', 'users/', `${user.id}`);
-  const pathToUserFile = path.join(pathToUserFolder, `${user.username}.json`);
-
-  fs.mkdir(pathToUserFolder, { recursive: true }, (err) => {
-    if (err) throw err;
-  });
-
-  fs.writeFile(pathToUserFile, userString, function (err) {
-    if (err) throw err;
-  });
-
-  return user;
-};
-
-const signUpRoute = (request, response) => {
-  if (request.method !== 'POST') return;
-
-  const user = request.body;
-
-  if (user && user.username && user.password && user.telephone && user.email) {
-
-    const userWithId = {
-      ...user,
-      id: Date.now()
-    };
-
-    const filePath = path.join(__dirname, '../../', 'db/', 'users', 'all_users.json');
-
-    fs.readFile(filePath, function (err, data) {
-      if (err) {
-          return console.error(err);
-      }
-
-      const allUsers = dataParser(data);
-      allUsers.push(userWithId);
-
-      fs.writeFile(filePath, JSON.stringify(allUsers), function (err) {
-        if (err) throw err;
-      });
-    });
-
-    saveUser(JSON.stringify(userWithId));
-
-    const res = {
-      status: 'success',
-      user: userWithId
-    };
-
-    response.status(201).json(res);
-  } else {
-    response.status(400).send('Bad Request');
+    response.status(201).json({ status: "success", user })
+  } catch (err) {
+    response.status(404).json({ status: "error", message: err.message });
   }
 };
 
-module.exports = signUpRoute;
+module.exports = createUser;
