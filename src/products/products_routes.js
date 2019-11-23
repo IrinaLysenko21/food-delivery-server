@@ -1,5 +1,13 @@
 const { Router } = require('express');
-const { sendAllProducts, sendOneProduct, sendSeveralProducts, sendProductsByCategory, updateProduct } = require('./controllers');
+const {
+  sendAllProducts,
+  sendOneProduct,
+  sendSeveralProducts,
+  sendProductsByCategory,
+  createProduct,
+  updateProduct,
+  deleteProduct
+} = require('./controllers');
 
 const router = Router();
 
@@ -12,6 +20,8 @@ router.get('/', (request, response) => {
 });
 
 router.get('/:id', sendOneProduct);
+router.post('/', createProduct);
 router.put('/:id', updateProduct);
+router.delete('/:id', deleteProduct);
 
 module.exports = router;

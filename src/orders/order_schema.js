@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const timestamp = require('../helpers/timestamp');
 
 const subProductsList = new Schema({
   product: {
@@ -45,6 +46,8 @@ const orderSchema = new Schema({
     required: true
   }
 });
+
+orderSchema.plugin(timestamp);
 
 const Order = mongoose.model('Order', orderSchema);
 

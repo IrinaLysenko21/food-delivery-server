@@ -6,7 +6,11 @@ const createOrder = async (request, response) => {
     const newOrder = new Order(request.body);
     const order = await newOrder.save();
 
-    await User.findOneAndUpdate({ _id: order.creator }, { orders: order._id }, { new: true });
+    const user = await User.findById(order.creator);
+    const userOrders = user.orders;
+    userOrders.push(order._id);
+
+    await User.findOneAndUpdate({ _id: order.creator }, { orders: userOrders }, { new: true });
 
     response.status(201).json({ status: "success", order })
   } catch (err) {

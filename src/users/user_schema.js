@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const timestamp = require('../helpers/timestamp');
 
 const userSchema = new Schema({
   username:  {
@@ -31,6 +32,8 @@ const userSchema = new Schema({
     required: true
   }
 });
+
+userSchema.plugin(timestamp);
 
 const User = mongoose.model('User', userSchema);
 

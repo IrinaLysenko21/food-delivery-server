@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const timestamp = require('../helpers/timestamp');
 
 const productSchema = new Schema({
   sku: {
@@ -15,7 +16,7 @@ const productSchema = new Schema({
     required: true
   },
   price: {
-    type: String,
+    type: Number,
     required: true
   },
   currency: {
@@ -24,14 +25,6 @@ const productSchema = new Schema({
   },
   creatorId: {
     type: Number,
-    required: true
-  },
-  created: {
-    type: String,
-    required: true
-  },
-  modified: {
-    type: String,
     required: true
   },
   categories: {
@@ -43,6 +36,8 @@ const productSchema = new Schema({
     required: true
   }
 });
+
+productSchema.plugin(timestamp);
 
 const Product = mongoose.model('Product', productSchema);
 
