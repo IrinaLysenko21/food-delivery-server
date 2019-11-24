@@ -1,4 +1,5 @@
 const Product = require('../product_schema');
+const Ingredient = require('../../ingredients/ingredients_schema');
 
 const getProduct = async (request, response) => {
   try {

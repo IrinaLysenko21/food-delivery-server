@@ -4,6 +4,11 @@ const { secret } = require('../config');
 const getToken = request => request.body.token || request.query.token || request.headers['x-access-token'];
 
 const checkToken = (request, response, next) => {
+  if (request.url === '/auth/login' || request.url === '/auth/register') {
+    next();
+    return;
+  }
+
   const token = getToken(request);
   const secretKey = secret;
 

@@ -2,6 +2,20 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const timestamp = require('../helpers/timestamp');
 
+// const subIngredientsList = new Schema({
+//   type: {
+//     type: String,
+//     required: true
+//   },
+//   ref: {
+//     type: String,
+//     required: true
+//   }
+// },
+// {
+//   _id : false
+// });
+
 const productSchema = new Schema({
   sku: {
     type: Number,
@@ -13,6 +27,10 @@ const productSchema = new Schema({
   },
   description: {
     type: String,
+    required: true
+  },
+  ingredients: {
+    type: Array,
     required: true
   },
   price: {
