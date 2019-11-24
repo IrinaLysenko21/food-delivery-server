@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const corsMiddleware = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const verifyToken = require('./helpers/check_token')
+const authRouter = require('./auth/auth_routes');
 const productsRouter = require('./products/products_routes');
 const usersRouter = require('./users/users_routes');
 const ordersRouter = require('./orders/orders_routes');
@@ -23,6 +25,8 @@ const startServer = () => {
     .use(express.json())
     .use(corsMiddleware())
     .use(morgan('dev'))
+    .use('/auth', authRouter)
+    .use(verifyToken)
     .use('/products', productsRouter)
     .use('/users', usersRouter)
     .use('/orders', ordersRouter)

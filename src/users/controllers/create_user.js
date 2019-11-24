@@ -11,7 +11,7 @@ const createUser = async (request, response) => {
     const newUser = new User(userData);
     const userToSave = await newUser.save();
 
-    response.status(201).json({ status: "success", user: userToSave })
+    response.status(201).json({ status: "success", user: userToSave });
   } catch (err) {
     response.status(404).json({ status: "error", message: err.message });
   }
