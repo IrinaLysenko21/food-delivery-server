@@ -4,7 +4,7 @@ const timestamp = require('../helpers/timestamp');
 
 const ingredientSchema = new Schema({
   name: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true
   },
   description: {
