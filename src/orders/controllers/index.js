@@ -1,6 +1,6 @@
 const ordersControllers = {
-  sendAllOrders: require('./send_all_orders'),
-  sendOneOrder: require('./send_one_order'),
+  getAllOrders: require('./get_all_orders'),
+  getOneOrder: require('./get_one_order'),
   createOrder: require('./create_order'),
   updateOrder: require('./update_order'),
   deleteOrder: require('./delete_order')

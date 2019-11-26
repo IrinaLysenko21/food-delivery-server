@@ -1,6 +1,6 @@
 const Product = require('../product_schema');
 
-const sendAllProducts = async (request, response) => {
+const getAllProducts = async (request, response) => {
   try {
     const products = await Product.find();
 
@@ -10,4 +10,4 @@ const sendAllProducts = async (request, response) => {
   }
 };
 
-module.exports = sendAllProducts;
+module.exports = getAllProducts;

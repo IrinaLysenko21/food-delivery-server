@@ -1,6 +1,6 @@
 const User = require('../user_schema');
 
-const getUser = async (request, response) => {
+const getOneUser = async (request, response) => {
   try {
     const id = request.params.id;
     const user = await User.findById(id);
@@ -11,4 +11,4 @@ const getUser = async (request, response) => {
   }
 };
 
-module.exports = getUser;
+module.exports = getOneUser;
