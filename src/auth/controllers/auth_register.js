@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../../users/user_schema');
-const { secret } = require('../../config');
+const { secret, tokenLifetime } = require('../../config');
 
 const generateToken = paramsForTokenGeneration => {
   return jwt.sign(paramsForTokenGeneration, secret, {
-    expiresIn: 60 * 60 * 24
+    expiresIn: tokenLifetime
   })
 };
 

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const timestamp = require('../helpers/timestamp');
+require('mongoose-type-email');
 
 const userSchema = new Schema({
   username:  {
@@ -16,7 +17,7 @@ const userSchema = new Schema({
     required: true,
   },
   email:  {
-    type: String,
+    type: mongoose.SchemaTypes.Email,
     required: true
   },
   favoriteProducts: {
