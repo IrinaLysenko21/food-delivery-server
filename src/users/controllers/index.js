@@ -1,7 +1,9 @@
 const usersControllers = {
-  sendAllUsers: require('./send_all_users'),
-  sendUser: require('./send_user'),
-  createUser: require('./create_user')
+  getAllUsers: require('./get_all_users'),
+  getOneUser: require('./get_one_user'),
+  createUser: require('./create_user'),
+  updateUser: require('./update_user'),
+  deleteUser: require('./delete_user')
 };
 
 module.exports = usersControllers;
