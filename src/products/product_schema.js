@@ -15,6 +15,10 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
+  ingredients: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Ingredient'
+  }],
   price: {
     type: Number,
     required: true
