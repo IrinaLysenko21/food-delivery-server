@@ -1,8 +1,9 @@
 const Product = require('../product_schema');
+const Ingredient = require('../../ingredients/ingredient_schema');
 
 const getAllProducts = async (request, response) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate('ingredients');
 
     response.status(200).json({ status: "success", products });
   } catch (err) {
