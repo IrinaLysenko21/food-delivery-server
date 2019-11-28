@@ -1,6 +1,6 @@
 const Order = require('../order_schema');
 
-const sendAllOrders = async (request, response) => {
+const getAllOrders = async (request, response) => {
   try {
     const orders = await Order.find();
 
@@ -10,4 +10,4 @@ const sendAllOrders = async (request, response) => {
   }
 };
 
-module.exports = sendAllOrders;
+module.exports = getAllOrders;

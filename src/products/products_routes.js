@@ -1,9 +1,9 @@
 const { Router } = require('express');
 const {
-  sendAllProducts,
-  sendOneProduct,
-  sendSeveralProducts,
-  sendProductsByCategory,
+  getAllProducts,
+  getOneProduct,
+  getSeveralProducts,
+  getProductsByCategory,
   createProduct,
   updateProduct,
   deleteProduct
@@ -14,12 +14,12 @@ const router = Router();
 router.get('/', (request, response) => {
   const requestQuery = Object.keys(request.query)[0];
 
-  request.url === '/' && sendAllProducts(request, response);
-  requestQuery === 'ids' && sendSeveralProducts(request, response);
-  requestQuery === 'category' && sendProductsByCategory(request, response);
+  request.url === '/' && getAllProducts(request, response);
+  requestQuery === 'ids' && getSeveralProducts(request, response);
+  requestQuery === 'category' && getProductsByCategory(request, response);
 });
 
-router.get('/:id', sendOneProduct);
+router.get('/:id', getOneProduct);
 router.post('/', createProduct);
 router.put('/:id', updateProduct);
 router.delete('/:id', deleteProduct);

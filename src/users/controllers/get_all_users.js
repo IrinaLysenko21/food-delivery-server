@@ -1,6 +1,6 @@
 const User = require('../user_schema');
 
-const sendAllUsers = async (request, response) => {
+const getAllUsers = async (request, response) => {
   try {
     const users = await User.find();
 
@@ -10,4 +10,4 @@ const sendAllUsers = async (request, response) => {
   }
 };
 
-module.exports = sendAllUsers;
+module.exports = getAllUsers;
