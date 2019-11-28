@@ -1,6 +1,6 @@
 const Order = require('../order_schema');
 
-const getOrder = async (request, response) => {
+const getOneOrder = async (request, response) => {
   try {
     const id = request.params.id;
     const order = await Order.findById(id);
@@ -11,4 +11,4 @@ const getOrder = async (request, response) => {
   }
 };
 
-module.exports = getOrder;
+module.exports = getOneOrder;

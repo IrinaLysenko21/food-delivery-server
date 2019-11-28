@@ -1,6 +1,6 @@
 const Product = require('../product_schema');
 
-const getProduct = async (request, response) => {
+const getOneProduct = async (request, response) => {
   try {
     const id = request.params.id;
     const product = await Product.findById(id).populate('ingredients');
@@ -11,4 +11,4 @@ const getProduct = async (request, response) => {
   }
 };
 
-module.exports = getProduct;
+module.exports = getOneProduct;
